@@ -1,3 +1,5 @@
+'use strict';
+
 var mongoose = require('mongoose'),
     Schema = mongoose.Schema;
 
@@ -60,6 +62,5 @@ var ToonSchema = new Schema({
     default: 0
   }
 });
-
 
 module.exports = mongoose.model('Toon', ToonSchema);
