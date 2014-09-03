@@ -14,6 +14,7 @@
   },
   "devDependencies": {
     "grunt": "~0.4.5",
-    "karma": "~0.12.22"
+    "karma": "~0.12.22",
+    "should": "4.x"
   }
 }

@@ -18,7 +18,8 @@ var ToonSchema = new Schema({
   buildTitle: {
     type: String,
     default: '',
-    trim: true
+    trim: true,
+    required: true
   },
   buildNotes: {
     type: String,
