@@ -25,17 +25,15 @@ app.engine('html', swig.renderFile);
 app.set('view engine', 'html');
 app.set('views', __dirname + '/app/views');
 
+// TODO: refactor the bootstrapping of models/routes
 // bootstrap models
-// TODO: use bootstrap code from mean to bring in all models via directory traversal
 var Toon = require('./app/models/toon');
 
 // bootstrap routes
 require('./app/routes/toons')(app);
 
-// temp index route
-app.get('/', function (req, res) {
-  res.render('index', { /* template locals context */ });
-});
+var index = require('./app/controllers/index');
+app.get('/', index.render);
 
 // START THE SERVER
 // =============================================================================

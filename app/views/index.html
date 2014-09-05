@@ -1,13 +1,8 @@
-<!DOCTYPE html>
-<html ng-app>
-  {% include './includes/head.html' %}
-  <body>
-    <div class="container">
-      <label>Name:</label>
-      <input type="text" ng-model="yourName" placeholder="Enter a name here">
-      <hr>
-      <h1>Hello {% raw %} {{yourName}} {% endraw %}!</h1>
-    </div>
-    {% include './includes/foot.html' %}
-  </body>
-</html>
+{% extends './layouts/default.html' %}
+
+{% block content %}
+  <div class="container">
+    <h1>Hello World</h1>
+    <div ui-view></div>
+  </div>
+{% endblock %}
