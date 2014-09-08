@@ -7,6 +7,11 @@ Shadowbane Character Builder
 * bower install
 * node server.js
 
-## Testing
+## Testing the server
 * npm install -g mocha
-* mocha tests/<test_file>
+* gulp mocha
+
+## Testing the client
+* npm install
+* gulp karma
+* gulp protractor
