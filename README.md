@@ -5,14 +5,13 @@ Shadowbane Character Builder
 * npm install -g bower
 * npm install
 * bower install
-* node server.js
+* gulp
 
 ## Testing the server
-* npm install -g mocha
+* npm install
 * gulp mocha
 
 ## Testing the client
-* npm install
-* gulp webdriver_update
+* npm install && gulp webdriver_update
 * gulp karma
 * gulp protractor
