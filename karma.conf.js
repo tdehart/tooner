@@ -14,8 +14,22 @@ module.exports = function(config) {
     // list of files / patterns to load in the browser
     // TODO: load js assets dynamically
     files: [
-      'public/js/system/tests/units/*.js'
+      "bower_components/angular/angular.js",
+      "bower_components/angular-resource/angular-resource.js",
+      "bower_components/angular-animate/angular-animate.js",
+      "bower_components/angular-ui-router/release/angular-ui-router.js",
+      "bower_components/angular-mocks/angular-mocks.js",
+      "public/js/app.js",
+      "public/js/system/system.js",
+      "public/js/system/controllers/index.js",
+      "public/js/toons/toons.js",
+      "public/js/toons/controllers/toons.js",
+      "public/js/toons/routes/toons.js",
+      "public/js/toons/services/toons.js",
+      "public/js/toons/tests/units/*.js"
     ],
+      
+    //'public/js/system/tests/units/*.js'
 
     // list of files to exclude
     exclude: [

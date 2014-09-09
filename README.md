@@ -13,5 +13,6 @@ Shadowbane Character Builder
 
 ## Testing the client
 * npm install
+* gulp webdriver_update
 * gulp karma
 * gulp protractor
