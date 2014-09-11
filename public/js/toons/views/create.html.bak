@@ -1,0 +1,92 @@
+<section ng-controller="ToonsController" ng-init="findComponents()">
+  <div class="row">
+    <div class="col-md-12 text-center">
+      <button type="button" class="btn btn-lg" ng-class="toonLevel === 1 ? 'btn-primary' : 'btn-default'" ng-click="chooseMinLevel()">Level 1</button>
+      <button type="button" ng-disabled="!selectedBaseClass" class="btn btn-lg" ng-class="toonLevel === 75 ? 'btn-primary' : 'btn-default'" ng-click="chooseMaxLevel()">Level 75</button>
+      <button type="button" class="btn btn-lg btn-warning" ng-click="resetToon()">Reset</button>
+    </div>
+  </div> 
+
+  <div class="row">
+    <div class="col-md-12">
+      <h1 class="text-center">Points Remaining: {{remainingPoints}} / {{maxPoints}}</h1>
+      <h2 class="text-center">{{selectedRace.name}} {{selectedBaseClass.name}} {{selectedPrestigeClass.name}}</h2>
+    </div>
+  </div>  
+
+  <div class="row">
+    <div class="col-md-6">
+      <div class="stats">
+        <ul class="list-unstyled">
+          <li>
+            <span class="stat-name">Strength</span>
+            <span class="stat-values"><span class="pointer" ng-click="minStat('strength')">{{stats.baseStrength}}</span>/<strong>{{stats.currentStrength}}</strong>/<span class="pointer" ng-click="maxStat('strength')">{{stats.maxStrength}}</span></span>
+            <span class="pointer glyphicon glyphicon-plus" ng-click="increaseStat('strength', 1)"></span> 
+            <span class="pointer glyphicon glyphicon-minus" ng-click="decreaseStat('strength', 1)"></span>
+          </li>
+          <li>
+            <span class="stat-name">Dexterity</span>
+            <span class="stat-values"><span class="pointer" ng-click="minStat('dexterity')">{{stats.baseDexterity}}</span>/<strong>{{stats.currentDexterity}}</strong>/<span class="pointer" ng-click="maxStat('dexterity')">{{stats.maxDexterity}}</span></span>
+            <span class="pointer glyphicon glyphicon-plus" ng-click="increaseStat('dexterity', 1)"></span> 
+            <span class="pointer glyphicon glyphicon-minus" ng-click="decreaseStat('dexterity', 1)"></span>
+          </li>
+          <li>
+            <span class="stat-name">Constitution</span>
+            <span class="stat-values"><span class="pointer" ng-click="minStat('constitution')">{{stats.baseConstitution}}</span>/<strong>{{stats.currentConstitution}}</strong>/<span class="pointer" ng-click="maxStat('constitution')">{{stats.maxConstitution}}</span></span>
+            <span class="pointer glyphicon glyphicon-plus" ng-click="increaseStat('constitution', 1)"></span> 
+            <span class="pointer glyphicon glyphicon-minus" ng-click="decreaseStat('constitution', 1)"></span>
+          </li>
+          <li>
+            <span class="stat-name">Intelligence</span>
+            <span class="stat-values"><span class="pointer" ng-click="minStat('intelligence')">{{stats.baseIntelligence}}</span>/<strong>{{stats.currentIntelligence}}</strong>/<span class="pointer" ng-click="maxStat('intelligence')">{{stats.maxIntelligence}}</span></span>
+            <span class="pointer glyphicon glyphicon-plus" ng-click="increaseStat('intelligence', 1)"></span> 
+            <span class="pointer glyphicon glyphicon-minus" ng-click="decreaseStat('intelligence', 1)"></span>
+          </li>
+          <li>
+            <span class="stat-name">Spirit</span>
+            <span class="stat-values"><span class="pointer" ng-click="minStat('spirit')">{{stats.baseSpirit}}</span>/<strong>{{stats.currentSpirit}}</strong>/<span class="pointer" ng-click="maxStat('spirit')">{{stats.maxSpirit}}</span></span>
+            <span class="pointer glyphicon glyphicon-plus" ng-click="increaseStat('spirit', 1)"></span> 
+            <span class="pointer glyphicon glyphicon-minus" ng-click="decreaseStat('spirit', 1)"></span>
+          </li>
+        </ul>        
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="traits">
+        <span class="selected-traits-header">Selected Runes</span>
+        <ul class="list-unstyled selected-traits">
+          <li ng-repeat="trait in selectedTraits | orderBy: 'name'">
+            {{trait.name}} ({{trait.cost}})
+          </li>
+          <li ng-repeat="discipline in selectedDisciplines | orderBy: 'name'">
+            {{discipline.name}}
+          </li>
+          <li ng-repeat="mastery in selectedMasteries | orderBy: 'name'">
+            {{mastery.name}} ({{mastery.cost}})
+          </li>
+          <li ng-repeat="statRune in selectedStatRunes | orderBy: 'name'">
+            {{statRune.name}} ({{statRune.cost}})
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-6 col-md-offset-3">
+      <div class="well">
+        <div class="form-group">
+          <label for="buildTitle">Build Title</label>
+          <input type="text" class="form-control" id="buildTitle" ng-model="buildTitle" placeholder="Enter build title..." required>
+        </div>
+        <div class="form-group">
+          <label for="buildNotes">Build Notes</label>
+          <textarea class="form-control" id="buildNotes" ng-model="buildNotes" placeholder="Enter build notes..." rows="4"></textarea>     
+        </div>
+        <button type="button" class="btn btn-success" ng-click="create()">Save</button>      
+      </div>
+    </div>
+  </div>
+
+</section>
