@@ -5,19 +5,19 @@ angular.module('toons').config(['$stateProvider', '$urlRouterProvider',
     $stateProvider
       .state('all toons', {
         url: '/toons',
-        templateUrl: 'js/toons/views/list.html'
+        templateUrl: 'toons/views/list.html'
       })
       .state('create toon', {
         url: '/toons/create',
-        templateUrl: 'js/toons/views/create.html'
+        templateUrl: 'toons/views/create.html'
       })
       .state('edit toon', {
         url: '/toons/:toonId/edit',
-        templateUrl: 'js/toons/views/edit.html'
+        templateUrl: 'toons/views/edit.html'
       })
       .state('toon by id', {
         url: '/toons/:toonId',
-        templateUrl: 'js/toons/views/view.html'
+        templateUrl: 'toons/views/view.html'
       })
   }
 ])
