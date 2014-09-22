@@ -53,9 +53,9 @@
             {{discipline.name}}
           </div>
         </li>
-        <li data-ng-repeat="mastery in masteries" ng-class="{hidden: !mastery.available && hideUnavailable === true}">
-          <div class="component-item pointer" ng-click="selectMastery(mastery)" ng-class="{active: mastery.selected, unavailable: !mastery.available}">
-            {{mastery.name}} ({{mastery.cost}})
+        <li data-ng-repeat="masteryRune in masteryRunes" ng-class="{hidden: !masteryRune.available && hideUnavailable === true}">
+          <div class="component-item pointer" ng-click="selectMasteryRune(masteryRune)" ng-class="{active: masteryRune.selected, unavailable: !masteryRune.available}">
+            {{masteryRune.name}} ({{masteryRune.cost}})
           </div>
         </li>        
       </ul>
@@ -150,8 +150,8 @@
           <li data-ng-repeat="discipline in selectedDisciplines | orderBy: 'name'">
             {{discipline.name}}
           </li>
-          <li data-ng-repeat="mastery in selectedMasteries | orderBy: 'name'">
-            {{mastery.name}} ({{mastery.cost}})
+          <li data-ng-repeat="masteryRune in selectedMasteries | orderBy: 'name'">
+            {{masteryRune.name}} ({{masteryRune.cost}})
           </li>
           <li data-ng-repeat="statRune in selectedStatRunes | orderBy: 'name'">
             {{statRune.name}} ({{statRune.cost}})

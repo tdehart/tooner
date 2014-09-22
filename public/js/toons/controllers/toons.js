@@ -21,8 +21,7 @@ angular.module('toons').controller('ToonsController', ['$scope', '$stateParams',
         currentConstitution: 35,
         currentIntelligence: 35,
         currentSpirit: 35
-      }
-
+      };
 
       $scope.remainingPoints = $scope.maxPoints = 55;
       $scope.selectedBaseClass = null;
@@ -33,76 +32,10 @@ angular.module('toons').controller('ToonsController', ['$scope', '$stateParams',
       $scope.prohibitedDisciplines = [];
       $scope.selectedTraits = [];
       $scope.selectedDisciplines = [];
-      $scope.selectedMasteries = [];
+      $scope.selectedMasteryRunes = [];
       $scope.selectedStatRunes = [];
       $scope.hideUnavailable = true;
       $scope.toonLevel = 1;
-
-      $scope.baseClasses = [{
-        'name': 'Fighter',
-        'grantedBaseStr': 5,
-        'grantedBaseDex': 0,
-        'grantedBaseCon': 5,
-        'grantedBaseInt': -10,
-        'grantedBaseSpi': 0
-      }, {
-        'name': 'Healer',
-        'grantedBaseStr': 0,
-        'grantedBaseDex': -10,
-        'grantedBaseCon': 5,
-        'grantedBaseInt': 0,
-        'grantedBaseSpi': 5
-      }, {
-        'name': 'Rogue',
-        'grantedBaseStr': 0,
-        'grantedBaseDex': 5,
-        'grantedBaseCon': 0,
-        'grantedBaseInt': 5,
-        'grantedBaseSpi': -10
-      }, {
-        'name': 'Mage',
-        'grantedBaseStr': -10,
-        'grantedBaseDex': 0,
-        'grantedBaseCon': 0,
-        'grantedBaseInt': 5,
-        'grantedBaseSpi': 5
-      }];
-
-        $scope.masteries = [{
-          'name': 'Master of Axes',
-          'cost': 5
-        }, {
-          'name': 'Master of Daggers',
-          'cost': 5
-        }, {
-          'name': 'Master of Great Axes',
-          'cost': 5
-        }, {
-          'name': 'Master of Great Hammers',
-          'cost': 5
-        }, {
-          'name': 'Master of Great Swords',
-          'cost': 5
-        }, {
-          'name': 'Master of Hammers',
-          'cost': 5
-        }, {
-          'name': 'Master of Pole Arms',
-          'cost': 5
-        }, {
-          'name': 'Master of Spears',
-          'cost': 5
-        }, {
-          'name': 'Master of Staves',
-          'cost': 5
-        }, {
-          'name': 'Master of Swords',
-          'cost': 5
-        }, {
-          'name': 'Master of Throwing',
-          'cost': 5
-        }
-      ];
     };
 
     $scope.create = function() {
@@ -115,7 +48,7 @@ angular.module('toons').controller('ToonsController', ['$scope', '$stateParams',
         selectedPrestigeClass: $scope.selectedPrestigeClass,
         selectedTraits: $scope.selectedTraits,
         selectedDisciplines: $scope.selectedDisciplines,
-        selectedMasteries: $scope.selectedMasteries,
+        selectedMasteryRunes: $scope.selectedMasteryRunes,
         selectedStatRunes: $scope.selectedStatRunes,
         remainingPoints: $scope.remainingPoints
       });
@@ -167,20 +100,27 @@ angular.module('toons').controller('ToonsController', ['$scope', '$stateParams',
     };
 
     $scope.findComponents = function() {
-      var traits = sbDataService.getTraits();
-      traits.then(function(result) {
-        $scope.traits = result;
-      });
-      var races = sbDataService.getRaces();
-      races.then(function(result) {
+      sbDataService.getRaces().then(function(result) {
         $scope.races = result;
       });
-      var prestigeClasses = sbDataService.getPrestigeClasses();
-      prestigeClasses.then(function(result) {
+      sbDataService.getBaseClasses().then(function(result) {
+        $scope.baseClasses = result;
+      });
+      sbDataService.getTraits().then(function(result) {
+        $scope.traits = result;
+      });
+      sbDataService.getPrestigeClasses().then(function(result) {
         $scope.prestigeClasses = result;
-      })
-      $scope.statRunes = [];
-      $scope.disciplines = [];
+      });
+      sbDataService.getDisciplines().then(function(result) {
+        $scope.disciplines = result;
+      });      
+      sbDataService.getStatRunes().then(function(result) {
+        $scope.statRunes = result;
+      });
+      sbDataService.getMasteryRunes().then(function(result) {
+        $scope.masteryRunes = result;
+      });
     };
 
     $scope.chooseMinLevel = function() {
@@ -512,34 +452,34 @@ angular.module('toons').controller('ToonsController', ['$scope', '$stateParams',
       });
     }    
 
-    $scope.selectMastery = function(mastery) {
-      if (!mastery.available) {
-        growl.addWarnMessage("Mastery not available.", {ttl: 5000});
+    $scope.selectMasteryRune = function(masteryRune) {
+      if (!masteryRune.available) {
+        growl.addWarnMessage("Mastery rune not available.", {ttl: 5000});
         return false;
       } else {
-        if(!mastery.selected) {
-          if (mastery.cost <= $scope.remainingPoints) {
-            mastery.selected = true;
-            $scope.selectedMasteries.push(mastery);
-            $scope.remainingPoints -= mastery.cost;
+        if(!masteryRune.selected) {
+          if (masteryRune.cost <= $scope.remainingPoints) {
+            masteryRune.selected = true;
+            $scope.selectedMasteryRunes.push(masteryRune);
+            $scope.remainingPoints -= masteryRune.cost;
           } else {
-            growl.addWarnMessage("Not enough points to apply mastery", {ttl: 5000});
+            growl.addWarnMessage("Not enough points to apply masteryRune", {ttl: 5000});
           }
           
         } else {
-          mastery.selected = false;
-          $scope.selectedMasteries.splice($scope.selectedMasteries.indexOf(mastery), 1);
-          $scope.remainingPoints += mastery.cost;
+          masteryRune.selected = false;
+          $scope.selectedMasteryRunes.splice($scope.selectedMasteryRunes.indexOf(masteryRune), 1);
+          $scope.remainingPoints += masteryRune.cost;
         }
       }
     };
 
     function deselectAllMasteries() {
-      $scope.masteries.forEach(function(mastery) {
-        if (mastery.selected) {
-          mastery.selected = false;
-          $scope.selectedMasteries.splice($scope.selectedMasteries.indexOf(mastery), 1);
-          $scope.remainingPoints += mastery.cost;
+      $scope.masteryRunes.forEach(function(masteryRune) {
+        if (masteryRune.selected) {
+          masteryRune.selected = false;
+          $scope.selectedMasteryRunes.splice($scope.selectedMasteryRunes.indexOf(masteryRune), 1);
+          $scope.remainingPoints += masteryRune.cost;
         }
       });
     }   
@@ -643,15 +583,15 @@ angular.module('toons').controller('ToonsController', ['$scope', '$stateParams',
       
     }
 
-    function getAvailableMasteries() {
+    function getAvailableMasteryRunes() {
       var prestigeClass = $scope.selectedPrestigeClass;
 
       if (prestigeClass) {
-        $scope.masteries.forEach(function(mastery) {
-          if (prestigeClass.availableMasteries.indexOf(mastery.name) !== -1) {
-            mastery.available = true;            
+        $scope.masteryRunes.forEach(function(masteryRune) {
+          if (prestigeClass.availableMasteryRunes.indexOf(masteryRune.name) !== -1) {
+            masteryRune.available = true;            
           } else {
-            mastery.available = false;
+            masteryRune.available = false;
           }
         });
       }
@@ -659,7 +599,7 @@ angular.module('toons').controller('ToonsController', ['$scope', '$stateParams',
 
     function getAvailableRunes() {
       getAvailableDisciplines();
-      getAvailableMasteries();
+      getAvailableMasteryRunes();
       getAvailableStatRunes();
     };
 
