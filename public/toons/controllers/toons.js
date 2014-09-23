@@ -2,9 +2,9 @@
 
 angular.module('toons').controller('ToonsController', ['$scope', '$stateParams', '$location', 'Toons', 'sbDataService',
   function($scope, $stateParams, $location, Toons, sbDataService) {
-    init();
+    $scope.init = function() {
+      findComponents();
 
-    function init() {
       $scope.stats = {
         baseStrength: 35,
         baseDexterity: 35,
@@ -36,6 +36,8 @@ angular.module('toons').controller('ToonsController', ['$scope', '$stateParams',
       $scope.selectedStatRunes = [];
       $scope.hideUnavailable = true;
       $scope.toonLevel = 1;
+
+      $location.path('toons/create/step1');
     };
 
     $scope.create = function() {
@@ -99,7 +101,7 @@ angular.module('toons').controller('ToonsController', ['$scope', '$stateParams',
       });
     };
 
-    $scope.findComponents = function() {
+    function findComponents() {
       sbDataService.getRaces().then(function(result) {
         $scope.races = result;
       });
@@ -129,8 +131,12 @@ angular.module('toons').controller('ToonsController', ['$scope', '$stateParams',
         $scope.remainingPoints -= 205;
         $scope.maxPoints -= 205;
 
-        unchoosePrestigeClass();
-        refundStatPoints();  
+        //Deselect prestige class
+        $scope.choosePrestigeClass($scope.selectedPrestigeClass);
+
+        refundStatPoints();
+
+        $location.path('toons/create/step1');
       }
     };
 
@@ -141,11 +147,13 @@ angular.module('toons').controller('ToonsController', ['$scope', '$stateParams',
         $scope.maxPoints += 205;
 
         getAvailablePrestigeClasses();  
+
+        $location.path('toons/create/step2');
       }
     };
 
     $scope.resetToon = function() {
-      if ($scope.toonLevel === 75)$scope.chooseMinLevel();
+      if ($scope.toonLevel === 75) $scope.chooseMinLevel();
       if ($scope.selectedRace) $scope.chooseRace($scope.selectedRace);
       $scope.buildTitle = "";
       $scope.buildNotes = "";
@@ -393,21 +401,16 @@ angular.module('toons').controller('ToonsController', ['$scope', '$stateParams',
     }
 
     $scope.choosePrestigeClass = function(prestigeClass) {
-      if (prestigeClass !== $scope.selectedPrestigeClass) {
-        unchoosePrestigeClass();
-        $scope.selectedPrestigeClass = prestigeClass;
-        getAvailableRunes();  
-      } else {
-        unchoosePrestigeClass();
-      }
-    };
-
-    function unchoosePrestigeClass() {
-      $scope.selectedPrestigeClass = null;
-
       deselectAllDisciplines();
       deselectAllStatRunes();
       deselectAllMasteries();
+
+      if (prestigeClass !== $scope.selectedPrestigeClass) {
+        $scope.selectedPrestigeClass = prestigeClass;
+        getAvailableRunes();  
+      } else {
+        $scope.selectedPrestigeClass = null;
+      }
     };
 
     $scope.selectDiscipline = function(disc) {

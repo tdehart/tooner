@@ -7,11 +7,27 @@ myApp.config(['$stateProvider', '$urlRouterProvider',
     // For unmatched routes:
     $urlRouterProvider.otherwise('/');
 
+    // Remove trailing slashes from URLs so that both trailing and non-trailing slashes match the same route
+    $urlRouterProvider.rule(function ($injector, $location) {
+      var path = $location.url();
+
+      // check to see if the path has a trailing slash
+      if ('/' === path[path.length - 1]) {
+        return path.replace(/\/$/, '');
+      }
+
+      if (path.indexOf('/?') > 0) {
+        return path.replace('/?', '?');
+      }
+
+      return false;
+    });
+
     // states for my app
     $stateProvider
       .state('home', {
         url: '/',
-        templateUrl: 'js/system/views/index.html'
+        templateUrl: 'system/views/index.html'
       });
   }
 ])
