@@ -556,7 +556,8 @@ angular.module('toons').controller('ToonsController', ['$scope', '$stateParams',
               discipline.availablePrestigeClasses.indexOf(prestigeClass.name) !== -1) {
             discipline.available = true;
 
-            if ($scope.prohibitedDisciplines.length > 0 && checkProhibitedRestriction(discipline)) {
+            if ($scope.prohibitedDisciplines.length > 0 && 
+                $scope.prohibitedDisciplines.indexOf(discipline.name) !== -1) {
               discipline.prohibited = true;
             } else {
               discipline.prohibited = false;
@@ -658,14 +659,6 @@ angular.module('toons').controller('ToonsController', ['$scope', '$stateParams',
         return false;
       }
     }
-
-    function checkProhibitedRestriction(disc) {
-      if ($scope.prohibitedDisciplines.indexOf(disc.name) !== -1) {
-        return true;
-      } else {
-        return false;
-      }
-    }    
 
     function changeBaseStats(stat, val) {
       switch (stat) {
