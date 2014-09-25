@@ -3,12 +3,10 @@
 var express = require('express'),
     bodyParser = require('body-parser'),
     swig = require('swig'),
-    mongoose = require('mongoose'),
-    config = require('./config');
+    config = require('./config'),
+    appPath = process.cwd();
 
 module.exports = function(app) {
-  mongoose.connect('mongodb://localhost/tooner-dev');
-
   // configure app to use bodyParser()
   // this will let us get the data from a POST
   app.use(bodyParser.urlencoded({ extended: true }));
@@ -22,4 +20,11 @@ module.exports = function(app) {
   app.engine('html', swig.renderFile);
   app.set('view engine', 'html');
   app.set('views', config.root + '/app/views');
+
+  // home route (angular app does the remaining presentation routing) 
+  var index = require(appPath + '/app/controllers/index');
+  app.get('/', index.render);
+
+  // toon REST API routes
+  require(appPath + '/app/routes/toons')(app);
 }

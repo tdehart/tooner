@@ -7,6 +7,9 @@ var fs = require('fs'),
 module.exports = function(passport, db) {
   var app = express();
 
+  // bootstrap models
+  var Toon = require(appPath + '/app/models/toon');
+
   // Express settings  
   require(appPath + '/app/config/express')(app);
 
