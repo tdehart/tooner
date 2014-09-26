@@ -2,16 +2,23 @@
 
 var fs = require('fs'),
     express = require('express'),
-    appPath = process.cwd();
+    path = require('path'),
+    config = require('./config');
 
 module.exports = function(passport, db) {
   var app = express();
 
-  // bootstrap models
-  var Toon = require(appPath + '/app/models/toon');
+  app.locals.title = config.app.title;
+  app.locals.jsFiles = config.getJavaScriptAssets();
+  app.locals.cssFiles = config.getCSSAssets();
+
+  // Bootstrap models
+  config.getGlobbedFiles('./app/models/**/*.js').forEach(function(modelPath) {
+    require(path.resolve(modelPath));
+  });
 
   // Express settings  
-  require(appPath + '/app/config/express')(app);
+  require(path.resolve('./app/config/express'))(app);
 
   return app;
 }

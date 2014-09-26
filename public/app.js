@@ -27,7 +27,7 @@ myApp.config(['$stateProvider', '$urlRouterProvider',
     $stateProvider
       .state('home', {
         url: '/',
-        templateUrl: 'system/views/index.html'
+        templateUrl: 'modules/system/views/index.html'
       });
   }
 ])

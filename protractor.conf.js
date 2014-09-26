@@ -1,6 +1,6 @@
 exports.config = {
   specs: [
-    'public/js/toons/tests/e2e/*.js'
+    'public/modules/toons/tests/e2e/*.js'
   ],
 
   baseUrl: 'http://localhost:8080/',

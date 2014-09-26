@@ -7,7 +7,7 @@ angular.module('toons').factory('sbDataService', ['$http', '$q',
     shadowbaneDataService.getTraits = function() {
       var deferred = $q.defer();
 
-      $http.get('public/shadowbane-db/starting-traits.json')
+      $http.get('lib/shadowbane-db/starting-traits.json')
         .success(function(data) {
           deferred.resolve(data);
         });
@@ -17,7 +17,7 @@ angular.module('toons').factory('sbDataService', ['$http', '$q',
     shadowbaneDataService.getBaseClasses = function() {
       var deferred = $q.defer();
 
-      $http.get('public/shadowbane-db/base-classes.json')
+      $http.get('lib/shadowbane-db/base-classes.json')
         .success(function(data) {
           deferred.resolve(data);
         });
@@ -27,7 +27,7 @@ angular.module('toons').factory('sbDataService', ['$http', '$q',
     shadowbaneDataService.getRaces = function() {
       var deferred = $q.defer();
 
-      $http.get('public/shadowbane-db/races.json')
+      $http.get('lib/shadowbane-db/races.json')
         .success(function(data) {
           deferred.resolve(data);
         });
@@ -37,7 +37,7 @@ angular.module('toons').factory('sbDataService', ['$http', '$q',
     shadowbaneDataService.getDisciplines = function() {
       var deferred = $q.defer();
 
-      $http.get('public/shadowbane-db/disciplines.json')
+      $http.get('lib/shadowbane-db/disciplines.json')
         .success(function(data) {
           deferred.resolve(data);
         });
@@ -47,7 +47,7 @@ angular.module('toons').factory('sbDataService', ['$http', '$q',
     shadowbaneDataService.getPrestigeClasses = function() {
       var deferred = $q.defer();
 
-      $http.get('public/shadowbane-db/prestige-classes.json')
+      $http.get('lib/shadowbane-db/prestige-classes.json')
         .success(function(data) {
           deferred.resolve(data);
         });
@@ -57,7 +57,7 @@ angular.module('toons').factory('sbDataService', ['$http', '$q',
     shadowbaneDataService.getStatRunes = function() {
       var deferred = $q.defer();
 
-      $http.get('public/shadowbane-db/stat-runes.json')
+      $http.get('lib/shadowbane-db/stat-runes.json')
         .success(function(data) {
           deferred.resolve(data);
         });
@@ -67,7 +67,7 @@ angular.module('toons').factory('sbDataService', ['$http', '$q',
     shadowbaneDataService.getMasteryRunes = function() {
       var deferred = $q.defer();
 
-      $http.get('public/shadowbane-db/mastery-runes.json')
+      $http.get('lib/shadowbane-db/mastery-runes.json')
         .success(function(data) {
           deferred.resolve(data);
         });
